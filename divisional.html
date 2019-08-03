@@ -53,7 +53,7 @@
             <p>In the Divisional Round, the</p>
         </div>
         <div class="col">
-            <svg width=600 height=800></svg>
+            <svg width=800 height=500></svg>
         </div>
     </div>
 
@@ -71,16 +71,22 @@
 </body>
 <script>
     async function init() {
-        const data = await d3.csv("https://github.com/stevegonzo/stevegonzo.github.io/blob/master/dv.csv");
+        const data = await d3.csv("https://github.com/stevegonzo/stevegonzo.github.io/blob/master/dv.csv", function(t) {
+            t.forEach(function(d) {
+                d.Time = +d.Time;
+                d.Point_Spread = +d.Point_Spread;
+            });
+            console.log(t[0]);
+        });
         var selection = d3.select("svg")
                         .append("g")
                         .attr("transform", "translate(50,50)");
         var xScale = d3.scaleLinear()
             .domain([0, 65])
-            .range([0, 800]);
+            .range([0, 750]);
         var yScale = d3.scaleLinear()
             .domain([-5, 10])
-            .range([500, 0]);
+            .range([450, 0]);
         var line = d3.line()
             .x(function(d) {return xScale(d.Time); })
             .y(function(d) {return yScale(d.Point_Spread); })

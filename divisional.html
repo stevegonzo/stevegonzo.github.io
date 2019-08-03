@@ -71,13 +71,9 @@
 </body>
 <script>
     async function init() {
-        const data = await d3.csv("dv.csv", function(t) {
-            t.forEach(function(d) {
-                d.Time = +d.Time;
-                d.Point_Spread = +d.Point_Spread;
-            });
-            console.log(t[0]);
-        });
+        const data = await d3.csv("dv.csv",);
+        console.log(t[0]);
+
         var selection = d3.select("svg")
                         .append("g")
                         .attr("transform", "translate(50,50)");
@@ -88,8 +84,8 @@
             .domain([-5, 10])
             .range([450, 0]);
         var line = d3.line()
-            .x(function(d) {return xScale(d.Time); })
-            .y(function(d) {return yScale(d.Point_Spread); })
+            .x(function(d) {return xScale(parseFloat(d.Time)); })
+            .y(function(d) {return yScale(parseInt(d.Point_Spread)); })
             .curve(d3.curveMonotoneX);
         selection.append("g")
             .attr("class", "x axis")

@@ -50,7 +50,7 @@
   <div class="containter">
     <div class="row">
         <div class="col-4">
-            <p>In the Divisional Round, the Bears</p>
+            <p>In the Divisional Round, the Bears squared</p>
         </div>
         <div class="col">
             <svg width=800 height=500></svg>
@@ -72,7 +72,6 @@
 <script>
     async function init() {
         const data = await d3.csv("dv.csv",);
-        console.log(t[0]);
 
         var selection = d3.select("svg")
                         .append("g")

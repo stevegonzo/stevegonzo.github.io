@@ -50,11 +50,10 @@
   <div class="containter">
     <div class="row">
         <div class="col-4">
-
+            <p>In the Divisional Round</p>
         </div>
         <div class="col">
-            <svg>
-            </svg>
+            <svg width=600 height=800></svg>
         </div>
     </div>
 
@@ -75,12 +74,27 @@
         const data = await d3.csv("https://github.com/stevegonzo/stevegonzo.github.io/blob/master/dv.csv");
         var selection = d3.select("svg")
                         .append("g")
-                        .append("rect")
-                        .attr("x", 50)
-                        .attr("y", 50)
-                        .attr("width", 50)
-                        .attr("height",50)
-                        .attr("fill", "blue");
+                        .attr("transform", "translate(50,50)");
+        var xScale = d3.scaleLinear()
+            .domain([0, 65])
+            .range([0, 800]);
+        var yScale = d3.scaleLinear()
+            .domain([-5, 10])
+            .range([500, 0]);
+        var line = d3.line()
+            .x(function(d) {return xScale(d.Time); })
+            .y(function(d) {return yScale(d.Point_Spread); })
+            .curve(d3.curveMonotoneX);
+        selection.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0, 800)")
+            .call(d3.axisBottom(xScale));
+        selection.append("g")
+            .attr("class", "y axis")
+            .call(d3.axisLeft(yScale));
+        selection.append("path")
+            .datum(data)
+            .attr("d", line);
     }
 </script>
 </html>

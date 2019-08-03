@@ -94,6 +94,9 @@
             .call(d3.axisLeft(yScale));
         selection.append("path")
             .datum(data)
+            .attr("fill", "none")
+            .attr("stroke", "steelblue")
+            .attr("stroke-width", 3)
             .attr("d", line);
     }
 </script>

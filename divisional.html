@@ -42,7 +42,7 @@
       <nav class="nav nav-masthead justify-content-center">
         <a class="nav-link active" href="divisional.html">Divisional Playoff</a>
         <a class="nav-link" href="nfc.html">NFC Championship</a>
-        <a class="nav-link" href="superbowl.html">Superbowl</a>
+        <a class="nav-link" href="superbowl.html">Super Bowl</a>
       </nav>
     </div>
   </header>
@@ -71,7 +71,7 @@
 </body>
 <script>
     async function init() {
-        const data = await d3.csv("https://github.com/stevegonzo/stevegonzo.github.io/blob/master/dv.csv", function(t) {
+        const data = await d3.csv("https://github.com/stevegonzo/stevegonzo.github.io/blob/master/dv.csv?raw=true", function(t) {
             t.forEach(function(d) {
                 d.Time = +d.Time;
                 d.Point_Spread = +d.Point_Spread;

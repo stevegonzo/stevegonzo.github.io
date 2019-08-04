@@ -163,6 +163,10 @@
                 dy: function() { return yScale(-3)},
             }
         ]
+
+        const makeAnnotations = d3.annotation()
+            .annotations(annotations);
+        selection.append("g").call(makeAnnotations);
     }
 </script>
 </html>

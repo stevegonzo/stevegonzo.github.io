@@ -33,8 +33,7 @@
       #tooltip {
           opacity: 0;
           text-align: center;
-          width: 100px;
-          height: 100px;
+          position: absolute;
           background: orangered;
           border: 0px;
       }
@@ -64,7 +63,7 @@
   <div class="containter">
     <div class="row">
         <div class="col-4">
-            <p>In the Divisional Round, the Bears squared off against the Seattle Seahawks at Soldier</p>
+            <p>In the Divisional Round, the Bears squared off against the Seattle Seahawks at Soldier Field</p>
         </div>
         <div class="col">
             <svg width=800 height=500></svg>
@@ -124,8 +123,8 @@
             .attr("r", 5)
             .on("mouseover", function(d) {
                 tooltip.style("opacity", 1)
-                .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY) + "px")
+                .style("left", (d3.mouse(this)[0]+90) + "px")
+                .style("top", (d3.mouse(this)[1]) + "px")
                 .html("Score:" + d.Score + "<br>" + d.Details);
             })
             .on("mouseout", function() { tooltip.style("opacity", 0)});

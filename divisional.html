@@ -55,7 +55,7 @@
   <div class="containter">
     <div class="row">
         <div class="col-4">
-            <p>In the Divisional Round, the Bears squared off against the Seattle</p>
+            <p>In the Divisional Round, the Bears squared off against the Seattle Seahawks</p>
         </div>
         <div class="col">
             <svg width=800 height=500></svg>
@@ -83,7 +83,7 @@
                         .attr("transform", "translate(50,50)");
         var xScale = d3.scaleLinear()
             .domain([0, 65])
-            .range([0, 750]);
+            .range([0, 700]);
         var yScale = d3.scaleLinear()
             .domain([-5, 10])
             .range([450, 0]);
@@ -93,7 +93,7 @@
             .curve(d3.curveMonotoneX);
         selection.append("g")
             .attr("class", "x axis")
-            .attr("transform", "translate(0, 400)")
+            .attr("transform", "translate(0, 300)")
             .call(d3.axisBottom(xScale));
         selection.append("g")
             .attr("class", "y axis")

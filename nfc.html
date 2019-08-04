@@ -7,6 +7,7 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.5">
     <script src='https://d3js.org/d3.v5.min.js'></script>
+    <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
     <title>The Chicago Bears' 2006 Playoff Run - NFC Championship</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/cover/">
@@ -25,6 +26,19 @@
         user-select: none;
       }
 
+      .dot {
+          fill:steelblue;
+          stroke: white;
+      }
+
+      #tooltip {
+          opacity: 0;
+          text-align: center;
+          position: absolute;
+          background: orangered;
+          border: 0px;
+      }
+
       @media (min-width: 768px) {
         .bd-placeholder-img-lg {
           font-size: 3.5rem;
@@ -34,26 +48,37 @@
     <!-- Custom styles for this template -->
     <link href="cover.css" rel="stylesheet">
   </head>
-  <body class="text-center">
+  <body onload="init()" class="text-center">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
   <header class="masthead mb-auto">
     <div class="inner">
       <h3 class="masthead-brand">The 2006 Chicago Bears' Playoff Run</h3>
       <nav class="nav nav-masthead justify-content-center">
-        <a class="nav-link active" href="divisional.html">Divisional Playoff</a>
-        <a class="nav-link" href="nfc.html">NFC Championship</a>
+        <a class="nav-link" href="divisional.html">Divisional Playoff</a>
+        <a class="nav-link active" href="nfc.html">NFC Championship</a>
         <a class="nav-link" href="superbowl.html">Super Bowl</a>
       </nav>
     </div>
   </header>
 
-  <main role="main" class="inner cover">
-    <h1 class="cover-heading">The NFC Championship</h1>
-    <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
-    <p class="lead">
-      <a href="#" class="btn btn-lg btn-secondary">Let's Get Started</a>
-    </p>
-  </main>
+  <div class="inner cover">
+    <div class="row">
+        <div class="col">
+            <h3>The NFC Championship</h3>
+            <p>In the conference championship game, the Bears faced the New Orleans Saints at Soldier Field.</p>
+        </div>
+        <div class="col">
+            <svg width=800 height=600></svg>
+            <div id="tooltip"></div>
+        </div>
+    </div>
+    <br>
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <a href="divisional.html" class="btn btn-primary btn-sm" role="button">&laquo; Previous Game</a>
+        <a href="superbowl.html" class="btn btn-primary btn-sm" role="button">Next Game &raquo;</a>
+    </div>
+
+  </div>
 
   <footer class="mastfoot mt-auto">
     <div class="inner">
@@ -65,4 +90,93 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
+<script>
+    async function init() {
+        const data = await d3.csv("nfc.csv",);
+
+        var selection = d3.select("svg")
+                        .append("g")
+                        .attr("transform", "translate(50,50)");
+        var xScale = d3.scaleLinear()
+            .domain([0, 60])
+            .range([0, 700]);
+        var yScale = d3.scaleLinear()
+            .domain([-5, 30])
+            .range([450, 0]);
+        var line = d3.line()
+            .x(function(d) {return xScale(parseFloat(d.Time)); })
+            .y(function(d) {return yScale(parseInt(d.Point_Spread)); })
+            .curve(d3.curveMonotoneX);
+        var tooltip = d3.select("#tooltip");
+        var ticks = [15, 30, 45];
+        var tickLabels = ["2nd Quarter", "3rd Quarter", "4th Quarter"];
+        selection.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0, 300)")
+            .call(d3.axisBottom(xScale).tickValues(ticks).tickFormat(function(d,i) { return tickLabels[i]}));
+        selection.append("g")
+            .attr("class", "y axis")
+            .call(d3.axisLeft(yScale));
+        selection.append("path")
+            .datum(data)
+            .attr("fill", "none")
+            .attr("stroke", "steelblue")
+            .attr("stroke-width", 3)
+            .attr("d", line);
+        selection.selectAll(".dot")
+            .data(data)
+            .enter().append("circle")
+            .attr("class", "dot")
+            .attr("cx", function(d) { return xScale(parseFloat(d.Time))})
+            .attr("cy", function(d) { return yScale(parseInt(d.Point_Spread))})
+            .attr("r", 10)
+            .on("mouseover", function(d) {
+                tooltip.style("opacity", 1)
+                .style("left", (d3.mouse(this)[0]+90) + "px")
+                .style("top", (d3.mouse(this)[1]) + "px")
+                .html("Score:  " + d.Score + "<br>" + d.Details);
+            })
+            .on("mouseout", function() { 
+                tooltip.style("opacity", 0)
+                .html("");
+            });
+        selection.append("text")
+            .attr("transform", "translate(360, 330)")
+            .style("text-anchor", "middle")
+            .text("Time of Play");
+        selection.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", -50)
+            .attr("x", -250)
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("Bears' Lead");
+        const annotations = [
+            {
+                note: {
+                    label: "A sack of Rex Grossman sets up a touchdown drive for Seattle",
+                    title: "Bears lose the lead"
+                },
+                x: 430,
+                y: 390,
+                dx: 70,
+                dy: -150,
+            },
+            {
+                note: {
+                    label: "Thomas Jones has 8 carries and the Bears gain 80 yards on the opening drive",
+                    title: "Bears take the early lead"
+                },
+                x: 68,
+                y: 90,
+                dx: 1,
+                dy: 220,
+            }
+        ]
+
+        const makeAnnotations = d3.annotation()
+            .annotations(annotations);
+        selection.append("g").call(makeAnnotations);
+    }
+</script>
 </html>

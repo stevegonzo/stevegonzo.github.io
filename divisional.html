@@ -151,6 +151,18 @@
             .attr("dy", "1em")
             .style("text-anchor", "middle")
             .text("Bears' Lead");
+        const annotations = [
+            {
+                note: {
+                    label: "Something here",
+                    title: "Bears lose the lead"
+                },
+                x: function() { return xScale(39.95)},
+                y: function() { return yScale(-3)},
+                dx: function() { return xScale(39.95)},
+                dy: function() { return yScale(-3)},
+            }
+        ]
     }
 </script>
 </html>

@@ -55,7 +55,7 @@
   <div class="containter">
     <div class="row">
         <div class="col-4">
-            <p>In the Divisional Round, the Bears squared off against the Seattle Seahawks</p>
+            <p>In the Divisional Round, the Bears squared off against the Seattle Seahawks at</p>
         </div>
         <div class="col">
             <svg width=800 height=500></svg>
@@ -112,9 +112,9 @@
             .attr("cy", function(d) { return yScale(parseInt(d.Point_Spread))})
             .attr("r", 5);
         selection.append("text")
-            .attr("transform", "translate(400, 470)")
+            .attr("transform", "translate(400, 300)")
             .style("text-anchor", "middle")
-            .text("Time");
+            .text("Time of Play");
         selection.append("text")
             .attr("transform", "rotate(-90)")
             .attr("y", -50)

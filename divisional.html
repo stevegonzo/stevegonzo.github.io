@@ -101,10 +101,12 @@
             .y(function(d) {return yScale(parseInt(d.Point_Spread)); })
             .curve(d3.curveMonotoneX);
         var tooltip = d3.select("#tooltip");
+        var ticks = [15, 30, 45];
+        var tickLabels = ["2nd Quarter", "3rd Quarter", "4th Quarter"];
         selection.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0, 300)")
-            .call(d3.axisBottom(xScale));
+            .call(d3.axisBottom(xScale).tickValues(ticks).tickFormat(function(d,i) { return tickLabels[i]}));
         selection.append("g")
             .attr("class", "y axis")
             .call(d3.axisLeft(yScale));

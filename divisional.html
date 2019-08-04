@@ -25,6 +25,11 @@
         user-select: none;
       }
 
+      .dot {
+          fill:steelblue;
+          stroke: steelblue;
+      }
+
       @media (min-width: 768px) {
         .bd-placeholder-img-lg {
           font-size: 3.5rem;
@@ -99,6 +104,13 @@
             .attr("stroke", "steelblue")
             .attr("stroke-width", 3)
             .attr("d", line);
+        selection.selectAll(".dot")
+            .data(data)
+            .enter().append("circle")
+            .attr("class", "dot")
+            .attr("cx", function(d) { return xScale(parseFloat(d.time))})
+            .attr("cy", function(d) { return yScale(parseInt(d.Point_Spread))})
+            .attr("r", 5);
     }
 </script>
 </html>

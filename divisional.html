@@ -126,14 +126,10 @@
                 .style("left", (d3.mouse(this)[0]+90) + "px")
                 .style("top", (d3.mouse(this)[1]) + "px")
                 .html("Score:" + d.Score + "<br>" + d.Details);
-                selection.selectAll(".dot")
-                .style("stroke", "orange");
             })
             .on("mouseout", function() { 
                 tooltip.style("opacity", 0);
-                selection.selectAll(".dot")
-                .stlye("stroke", "white");
-                });
+            });
         selection.append("text")
             .attr("transform", "translate(400, 420)")
             .style("text-anchor", "middle")

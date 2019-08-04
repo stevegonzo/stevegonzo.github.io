@@ -7,6 +7,7 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.5">
     <script src='https://d3js.org/d3.v5.min.js'></script>
+    <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
     <title>The Chicago Bears' 2006 Playoff Run - Divisional Playoff</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/cover/">
@@ -127,10 +128,11 @@
                 tooltip.style("opacity", 1)
                 .style("left", (d3.mouse(this)[0]+90) + "px")
                 .style("top", (d3.mouse(this)[1]) + "px")
-                .html("Score:" + d.Score + "<br>" + d.Details);
+                .html("Score:  " + d.Score + "<br>" + d.Details);
             })
             .on("mouseout", function() { 
-                tooltip.style("opacity", 0);
+                tooltip.style("opacity", 0)
+                .style("left", "0px");
             });
         selection.append("text")
             .attr("transform", "translate(400, 420)")
@@ -142,7 +144,7 @@
             .attr("x", -250)
             .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .text("Margin of Lead");
+            .text("Bears' Lead");
     }
 </script>
 </html>

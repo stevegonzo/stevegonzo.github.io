@@ -112,7 +112,7 @@
         var tickLabels = ["2nd Quarter", "3rd Quarter", "4th Quarter"];
         selection.append("g")
             .attr("class", "x axis")
-            .attr("transform", "translate(0, 300)")
+            .attr("transform", "translate(0, 385)")
             .call(d3.axisBottom(xScale).tickValues(ticks).tickFormat(function(d,i) { return tickLabels[i]}));
         selection.append("g")
             .attr("class", "y axis")
@@ -141,7 +141,7 @@
                 .html("");
             });
         selection.append("text")
-            .attr("transform", "translate(360, 330)")
+            .attr("transform", "translate(360, 390)")
             .style("text-anchor", "middle")
             .text("Time of Play");
         selection.append("text")
